@@ -51,7 +51,7 @@ EAS_MAPPING = {
     'CY': {'9928': 'vat'},
     'CZ': {'9929': 'vat'},
     'DE': {'9930': 'vat'},
-    'DK': {'0184': 'company_registry', '0198': 'vat'},
+    'DK': {'0184': 'vat', '0198': 'vat'},
     'EE': {'9931': 'vat'},
     'ES': {'9920': 'vat'},
     'FI': {'0216': None},
@@ -458,7 +458,7 @@ class AccountEdiCommon(models.AbstractModel):
     def _import_currency(self, tree, xpath):
         logs = []
         currency_name = tree.findtext(xpath)
-        currency = self.env['res.currency']
+        currency = self.env.company.currency_id
         if currency_name is not None:
             currency = currency.with_context(active_test=False).search([
                 ('name', '=', currency_name),
